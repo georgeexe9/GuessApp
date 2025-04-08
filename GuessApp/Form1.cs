@@ -74,11 +74,14 @@ namespace GuessApp
                     // Визуализираме отговорите от листа(който се явява като стойност в речника)
                     for (int i = 0; i < s.Value.Count; i++)
                     {
-                        Viewer1.AppendText($"{i + 1}. {s.Value[i]}\n");
+                        Viewer1.AppendText($"{i + 1} {s.Value[i]}\n");
                     }
                     Viewer1.AppendText(Environment.NewLine);
+                   
 
                 }
+                //Визуализиране на правилния отговор под всеки въведен въпрос
+                
             }
         }
         private void ClearBoxes()
@@ -123,15 +126,23 @@ namespace GuessApp
                 MessageBox.Show("Тестът завърши!", "Край", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
+            //Визуализираме всеки въпрос от речника
             string question = questionKeys[currentQuestionIndex];
+            //Визуализираме всички отговори на въпросите
             List<string> answers = QuestionsAnswers[question];
+            //визуализираме правилния отговор на всеки въпрос
+            string CurrectAnswer = CurrectAnswers[question];
+            
             //пълним viewer1 със съдържанието от речниците 
             Viewer1.Clear();
             Viewer1.AppendText($" {question}\n\n");
-            Viewer1.AppendText($"1. {answers[0]}\n");
-            Viewer1.AppendText($"2. {answers[1]}\n");
-            Viewer1.AppendText($"3. {answers[2]}\n");
+            Viewer1.AppendText($"A). {answers[0]}\n");
+            Viewer1.AppendText($"B). {answers[1]}\n");
+            Viewer1.AppendText($"C). {answers[2]}\n");
+            Viewer1.AppendText($"D). {CurrectAnswer}");
+            //добавяме правилния отговор да се показва при стартиране на играта
+
+
         }
 
         private void Submit_Click(object sender, EventArgs e)
@@ -164,7 +175,7 @@ namespace GuessApp
             }
             else
             {
-                MessageBox.Show($"Грешен отговор! Верният отговор е: {correctAnswer}", "Грешен отговор", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Грешен отговор! Верният отговор е: {correctAnswer}", "Грешен отговор", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 AnswerBox.Clear();
                 anticounter++;
             }

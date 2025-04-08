@@ -340,7 +340,7 @@ namespace GuessApp
             // SaveButtonQuestions
             // 
             this.SaveButtonQuestions.Name = "SaveButtonQuestions";
-            this.SaveButtonQuestions.Size = new System.Drawing.Size(180, 22);
+            this.SaveButtonQuestions.Size = new System.Drawing.Size(169, 22);
             this.SaveButtonQuestions.Text = "Запиши въпроси";
             this.SaveButtonQuestions.Click += new System.EventHandler(this.SaveButtonQuestions_Click);
             // 
