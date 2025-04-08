@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace GuessApp
 {
@@ -20,8 +18,6 @@ namespace GuessApp
         public Form1()
         {
             InitializeComponent();
-           
-
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -47,7 +43,7 @@ namespace GuessApp
             if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
             {
                 MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
             }
             else
             {
@@ -59,8 +55,8 @@ namespace GuessApp
                 CurrectAnswers[ques] = rightAnswer;
                 MessageBox.Show("Вашия въпрос и отговорите бяха успешно запазени!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-                //задаваме въпросите като ключове в речника, а отговорите стойност в лист
-             
+            //задаваме въпросите като ключове в речника, а отговорите стойност в лист
+
             if (QuestionsAnswers.Count == 0)
             {
                 MessageBox.Show("Няма въведени въпроси");
@@ -81,7 +77,7 @@ namespace GuessApp
                         Viewer1.AppendText($"{i + 1}. {s.Value[i]}\n");
                     }
                     Viewer1.AppendText(Environment.NewLine);
-                    
+
                 }
             }
         }
@@ -99,20 +95,21 @@ namespace GuessApp
         {
             StartTest();
         }
+        //Инициализираме индекс, който ще ни проверява номера на въпросите 
         int currentQuestionIndex = 0;
+        //Инициализираме лист - questionKeys , който пази въпросите
         private List<string> questionKeys;
-
 
         private void StartTest()
         {
-            
+
             if (QuestionsAnswers.Count == 0)
             {
 
                 MessageBox.Show("Няма добавени въпроси!", "Грешка!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //Запазваме въпросите(ключовете) в отделен лист
+            //Запазваме въпросите(ключовете) от QuestionsAnswers в List<string> questionKeys;
             questionKeys = new List<string>(QuestionsAnswers.Keys);
             currentQuestionIndex = 0;
             ShowNextQuestion();
@@ -139,28 +136,28 @@ namespace GuessApp
 
         private void Submit_Click(object sender, EventArgs e)
         {
-           
+
             string SelectedAnswer = AnswerBox.Text;
             if (QuestionsAnswers.Count == 0 || CurrectAnswers.Count == 0)
             {
-                MessageBox.Show("Няма как да отговориш на въпрос без да знаеш отговора! Създай въпрос, кликни върху - Стартирай игра и отговори!","Внимание",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Няма как да отговориш на въпрос без да знаеш отговора! Създай въпрос, кликни върху - Стартирай игра и отговори!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
                 CheckAnswer(SelectedAnswer);
             }
-               
+
         }
         private void CheckAnswer(string SelectedAnswer)
         {
-            
+
             string question = questionKeys[currentQuestionIndex];
             string correctAnswer = CurrectAnswers[question];
-
+            //Сравняваме въведения отговор на потребитела с този въведен в речниците - като игнорираме как се въвежда стрига
             if (SelectedAnswer.Equals(correctAnswer, StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show("Верен отговор!", "Браво!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-  
+
                 Viewer1.Clear();
                 AnswerBox.Clear();
                 counter++;
@@ -176,15 +173,15 @@ namespace GuessApp
             //ако сме преминали през всичките въпроси да покаже резултата 
             if (currentQuestionIndex >= questionKeys.Count)
             {
-                MessageBox.Show($"Отговори ли сте на общо правилни - {counter} въпроси и на общо грешни - {anticounter} въпроси" , "Въпроси", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Отговори ли сте на общо правилни - {counter} въпроси и на общо грешни - {anticounter} въпроси", "Въпроси", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RightAsw.Clear();
             }
-            
+
         }
 
-       public void SaveQuestions()
+        public void SaveQuestions()
         {
-            
+
             if (QuestionsAnswers.Count != 0)
             {
                 var toXMLfile = new XElement("Questions", QuestionsAnswers.Select(kv => new XElement("Question", new XAttribute("Key", kv.Key), kv.Value.Select(value => new XElement("Answer", value)))));
@@ -209,7 +206,7 @@ namespace GuessApp
             {
                 MessageBox.Show("Няма въведени въпроси!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-           
+
         }
 
         private void SaveButtonQuestions_Click(object sender, EventArgs e)
@@ -219,3 +216,4 @@ namespace GuessApp
 
     }
 }
+
