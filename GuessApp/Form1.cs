@@ -235,7 +235,7 @@ namespace GuessApp
                         MessageBox.Show("Въпросите не бяха записани", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                
+
             }
             else
             {
@@ -274,7 +274,7 @@ namespace GuessApp
                     MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
-                
+
 
 
             }
@@ -301,6 +301,46 @@ namespace GuessApp
         {
             DeleteDictionary();
         }
+
+        private void ResultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Отговори ли сте на общо правилни - {counter} въпроси и на общо грешни - {anticounter} въпроси", "Въпроси");
+
+        }
+
+        private void QuestionCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int count = QuestionsAnswers.Count;
+            MessageBox.Show($"Общо въведени въпроси: {count}");
+        }
+
+        private void покажиВсичкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Viewer1.Clear();
+            if (QuestionsAnswers.Count == 0)
+            {
+                MessageBox.Show("Няма въведени въпроси");
+            }
+            else
+            {
+                foreach (var s in QuestionsAnswers)
+                {
+                    // Показваме кючовете като въпроси в Richtextbox
+
+                    string savedAnswers = $"Вашия въпрос е: {s.Key}";
+                    Viewer1.AppendText(savedAnswers + Environment.NewLine);
+
+
+                    // Визуализираме отговорите от листа(който се явява като стойност в речника)
+                    for (int i = 0; i < s.Value.Count; i++)
+                    {
+                        Viewer1.AppendText($"{i + 1} {s.Value[i]}\n");
+                    }
+                    Viewer1.AppendText(Environment.NewLine);
+
+
+                }
+            }
+        }
     }
 }
-
