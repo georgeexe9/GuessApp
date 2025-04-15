@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.IO;
 
 namespace GuessApp
 {
 
     public partial class Form1 : Form
     {
+        //използвам ги по-надолу
         private int counter = 0;
         private int anticounter = 0;
         //Речник, който записва въпроси и възможни отговори
@@ -69,7 +71,7 @@ namespace GuessApp
                 //
                 //Въведените въпроси в речника "QuestionsAnswers" са запазени като ключове, а стойностите на всеки ключ са отговори, запазени в лист
                 //questions - key / List<string> - value (съдържа въпроси)
-                QuestionsAnswers[ques] = new List<string>() { answer1, answer2, answer3, rightAnswer };
+                QuestionsAnswers[ques] = new List<string>() { answer1, answer2, answer3, rightAnswer};
                 //В "CurrectAnswers въпросите са запазени като ключове, а правилния им отговор като стойност
                 CurrectAnswers[ques] = rightAnswer;
                 MessageBox.Show("Вашия въпрос и отговорите бяха успешно запазени!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -167,13 +169,14 @@ namespace GuessApp
         private void Submit_Click(object sender, EventArgs e)
         {
 
-            string SelectedAnswer = AnswerBox.Text;
+            
             if (QuestionsAnswers.Count == 0 || CurrectAnswers.Count == 0)
             {
                 MessageBox.Show("Няма как да отговориш на въпрос без да знаеш отговора! Създай въпрос, кликни върху - Стартирай игра и отговори!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
+                string SelectedAnswer = AnswerBox.Text;
                 CheckAnswer(SelectedAnswer);
             }
 
@@ -187,7 +190,6 @@ namespace GuessApp
             if (SelectedAnswer.Equals(correctAnswer, StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show("Верен отговор!", "Браво!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 Viewer1.Clear();
                 AnswerBox.Clear();
                 counter++;
@@ -209,39 +211,17 @@ namespace GuessApp
 
         }
 
-        public void SaveQuestions()
+        private void SaveQuestionsToTxt()
         {
 
-            if (QuestionsAnswers.Count != 0)
-            {
-                var toXMLfile = new XElement("Questions", QuestionsAnswers.Select(kv => new XElement("Question", new XAttribute("Key", kv.Key), kv.Value.Select(value => new XElement("Answer", value)))));
-                var SaveFileDialog = new SaveFileDialog();
-                //В какъв файлов формат искаме да бъде записан файла
-                //можеш да си спестя тези редове просто като сложа контроли
-                SaveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
-                SaveFileDialog.Title = "Save XML File";
-                SaveFileDialog.FileName = "questions_answers.xml";
-                if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = SaveFileDialog.FileName;
-                    toXMLfile.Save(filePath);
-                    MessageBox.Show("Въпросите бяха записани успешно", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Въпросите не бяха записани", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Няма въведени въпроси!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
+          
         }
+        
+
 
         private void SaveButtonQuestions_Click(object sender, EventArgs e)
         {
-            SaveQuestions();
+            SaveQuestionsToTxt();
         }
 
         private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
