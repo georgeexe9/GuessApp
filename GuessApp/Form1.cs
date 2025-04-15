@@ -35,7 +35,7 @@ namespace GuessApp
             Viewer1.SelectionAlignment = HorizontalAlignment.Center;
             Viewer1.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
             Viewer1.ForeColor = Color.Blue;
-            Viewer1.AppendText("====Добре дошли в Question Game!====\n За да започнете игра, добавете въпроси!");
+            Viewer1.AppendText("Добре дошли в Question Game!\n За да започнете игра, добавете въпроси!");
         }
 
 
@@ -261,10 +261,12 @@ namespace GuessApp
         }
         private void DeleteDictionary()
         {
-            DialogResult decision = MessageBox.Show("Наистина ли искате да изтриете всички въведени въпроси", "Изтриване на въпроси", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (decision == DialogResult.Yes)
+
+
+            if (QuestionsAnswers.Count != 0 || CurrectAnswers.Count != 0)
             {
-                if (QuestionsAnswers.Count != 0 || CurrectAnswers.Count != 0)
+                DialogResult decision = MessageBox.Show("Наистина ли искате да изтриете всички въведени въпроси", "Изтриване на въпроси", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (decision == DialogResult.Yes)
                 {
                     QuestionsAnswers.Clear();
                     CurrectAnswers.Clear();
@@ -272,18 +274,16 @@ namespace GuessApp
                     MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
-                else
-                {
-                    MessageBox.Show("Няма въведени въпроси за изтриване", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                
+
+
+            }
+            else
+            {
+                MessageBox.Show("Няма въведени въпроси за изтриване", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
-            DeleteDictionary();
-        }
-
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult decision = MessageBox.Show("Наистина ли искате да затворите приложението?", "Тъжно", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -295,6 +295,11 @@ namespace GuessApp
             {
                 MessageBox.Show("Хахаха ще играеш още!", "HAHAHA");
             }
+        }
+
+        private void ClearAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteDictionary();
         }
     }
 }
