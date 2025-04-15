@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.IO;
+using System.Drawing;
 
 namespace GuessApp
 {
@@ -19,6 +22,22 @@ namespace GuessApp
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            TextStyle();
+        }
+
+
+        private void TextStyle()
+        {
+         
+            Viewer1.SelectionAlignment = HorizontalAlignment.Center;
+            Viewer1.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            Viewer1.ForeColor = Color.Blue;
+            Viewer1.AppendText("====Добре дошли в Question Game!====\n За да започнете игра, добавете въпроси!");
+        }
+        
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
@@ -225,6 +244,37 @@ namespace GuessApp
             SaveQuestions();
         }
 
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowHelp();
+        }
+        private void ShowHelp()
+        {
+            string file = File.ReadAllText(@"Help.txt", Encoding.GetEncoding("UTF-8"));
+            Viewer1.Text = file;
+        }
+        private void DeleteDictionary()
+        {
+            if (QuestionsAnswers.Count != 0 || CurrectAnswers.Count != 0)
+            {
+                QuestionsAnswers.Clear();
+                CurrectAnswers.Clear();
+                Viewer1.Text = "";
+                MessageBox.Show("Въпросите бяха изтрити","Информация",MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("Няма въведени въпроси за изтриване", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DeleteDictionary();
+        }
+
+        
     }
 }
 
