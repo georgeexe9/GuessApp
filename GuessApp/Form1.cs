@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using System.IO;
-using System.Drawing;
 
 namespace GuessApp
 {
@@ -31,13 +31,13 @@ namespace GuessApp
 
         private void TextStyle()
         {
-         
+
             Viewer1.SelectionAlignment = HorizontalAlignment.Center;
             Viewer1.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
             Viewer1.ForeColor = Color.Blue;
             Viewer1.AppendText("====Добре дошли в Question Game!====\n За да започнете игра, добавете въпроси!");
         }
-        
+
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
@@ -96,11 +96,11 @@ namespace GuessApp
                         Viewer1.AppendText($"{i + 1} {s.Value[i]}\n");
                     }
                     Viewer1.AppendText(Environment.NewLine);
-                   
+
 
                 }
                 //Визуализиране на правилния отговор под всеки въведен въпрос
-                
+
             }
         }
         private void ClearBoxes()
@@ -151,7 +151,7 @@ namespace GuessApp
             List<string> answers = QuestionsAnswers[question];
             //визуализираме правилния отговор на всеки въпрос
             string CurrectAnswer = CurrectAnswers[question];
-            
+
             //пълним viewer1 със съдържанието от речниците 
             Viewer1.Clear();
             Viewer1.AppendText($" {question}\n\n");
@@ -260,7 +260,7 @@ namespace GuessApp
                 QuestionsAnswers.Clear();
                 CurrectAnswers.Clear();
                 Viewer1.Text = "";
-                MessageBox.Show("Въпросите бяха изтрити","Информация",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             else
@@ -274,7 +274,18 @@ namespace GuessApp
             DeleteDictionary();
         }
 
-        
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult decision = MessageBox.Show("Наистина ли искате да затворите приложението?", "Тъжно", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (decision == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+            else
+            {
+                MessageBox.Show("Хахаха ще играеш още!","HAHAHA");
+            }
+        }
     }
 }
 
