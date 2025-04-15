@@ -214,23 +214,28 @@ namespace GuessApp
 
             if (QuestionsAnswers.Count != 0)
             {
-                var toXMLfile = new XElement("Questions", QuestionsAnswers.Select(kv => new XElement("Question", new XAttribute("Key", kv.Key), kv.Value.Select(value => new XElement("Answer", value)))));
-                var SaveFileDialog = new SaveFileDialog();
-                //В какъв файлов формат искаме да бъде записан файла
-                //можеш да си спестя тези редове просто като сложа контроли
-                SaveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
-                SaveFileDialog.Title = "Save XML File";
-                SaveFileDialog.FileName = "questions_answers.xml";
-                if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                DialogResult decision = MessageBox.Show("Въпросите ще бъдат запаметени като XML файл, желаете ли да продължите?", "Записване", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (decision == DialogResult.Yes)
                 {
-                    string filePath = SaveFileDialog.FileName;
-                    toXMLfile.Save(filePath);
-                    MessageBox.Show("Въпросите бяха записани успешно", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var toXMLfile = new XElement("Questions", QuestionsAnswers.Select(kv => new XElement("Question", new XAttribute("Key", kv.Key), kv.Value.Select(value => new XElement("Answer", value)))));
+                    var SaveFileDialog = new SaveFileDialog();
+                    //В какъв файлов формат искаме да бъде записан файла
+                    //можеш да си спестя тези редове просто като сложа контроли
+                    SaveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                    SaveFileDialog.Title = "Save XML File";
+                    SaveFileDialog.FileName = "questions_answers.xml";
+                    if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string filePath = SaveFileDialog.FileName;
+                        toXMLfile.Save(filePath);
+                        MessageBox.Show("Въпросите бяха записани успешно", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Въпросите не бяха записани", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Въпросите не бяха записани", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                
             }
             else
             {
@@ -238,6 +243,7 @@ namespace GuessApp
             }
 
         }
+
 
         private void SaveButtonQuestions_Click(object sender, EventArgs e)
         {
@@ -255,20 +261,24 @@ namespace GuessApp
         }
         private void DeleteDictionary()
         {
-            if (QuestionsAnswers.Count != 0 || CurrectAnswers.Count != 0)
+            DialogResult decision = MessageBox.Show("Наистина ли искате да изтриете всички въведени въпроси", "Изтриване на въпроси", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (decision == DialogResult.Yes)
             {
-                QuestionsAnswers.Clear();
-                CurrectAnswers.Clear();
-                Viewer1.Text = "";
-                MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (QuestionsAnswers.Count != 0 || CurrectAnswers.Count != 0)
+                {
+                    QuestionsAnswers.Clear();
+                    CurrectAnswers.Clear();
+                    Viewer1.Text = "";
+                    MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                }
+                else
+                {
+                    MessageBox.Show("Няма въведени въпроси за изтриване", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            else
-            {
-                MessageBox.Show("Няма въведени въпроси за изтриване", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+
         }
-
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             DeleteDictionary();
@@ -283,7 +293,7 @@ namespace GuessApp
             }
             else
             {
-                MessageBox.Show("Хахаха ще играеш още!","HAHAHA");
+                MessageBox.Show("Хахаха ще играеш още!", "HAHAHA");
             }
         }
     }
