@@ -14,6 +14,7 @@ namespace GuessApp
     {
         private int counter = 0;
         private int anticounter = 0;
+        Random randomAnswer = new Random();
         //Речник, който записва въпроси и възможни отговори
         Dictionary<string, List<string>> QuestionsAnswers = new Dictionary<string, List<string>>();
         //Речник, който записва въпросите и само правилните отговори към тях.
@@ -250,15 +251,15 @@ namespace GuessApp
             SaveQuestions();
         }
 
-        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowHelp();
-        }
         private void ShowHelp()
         {
+            Viewer1.Clear();
             string file = File.ReadAllText(@"Help.txt", Encoding.GetEncoding("UTF-8"));
             Viewer1.Text = file;
         }
+
+   
+        
         private void DeleteDictionary()
         {
 
@@ -310,8 +311,8 @@ namespace GuessApp
 
         private void QuestionCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int count = QuestionsAnswers.Count;
-            MessageBox.Show($"Общо въведени въпроси: {count}");
+            int countQuestions = QuestionsAnswers.Count;
+            MessageBox.Show($"Общо въведени въпроси: {countQuestions}");
         }
 
         private void покажиВсичкиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -342,5 +343,12 @@ namespace GuessApp
                 }
             }
         }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowHelp();
+        }
+
+        
     }
 }

@@ -55,16 +55,16 @@ namespace GuessApp
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.покажиВсичкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.статистикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.QuestionCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ClearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveButtonQuestions = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.статистикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.QuestionCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.покажиВсичкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -318,9 +318,9 @@ namespace GuessApp
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(288, 99);
+            this.pictureBox1.Location = new System.Drawing.Point(286, 99);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(74, 74);
+            this.pictureBox1.Size = new System.Drawing.Size(76, 74);
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
@@ -361,6 +361,36 @@ namespace GuessApp
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.настройкиToolStripMenuItem.Text = "Опции";
             // 
+            // покажиВсичкиToolStripMenuItem
+            // 
+            this.покажиВсичкиToolStripMenuItem.Name = "покажиВсичкиToolStripMenuItem";
+            this.покажиВсичкиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.покажиВсичкиToolStripMenuItem.Text = "Покажи всички";
+            this.покажиВсичкиToolStripMenuItem.Click += new System.EventHandler(this.покажиВсичкиToolStripMenuItem_Click);
+            // 
+            // статистикаToolStripMenuItem
+            // 
+            this.статистикаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.QuestionCountToolStripMenuItem,
+            this.ResultToolStripMenuItem});
+            this.статистикаToolStripMenuItem.Name = "статистикаToolStripMenuItem";
+            this.статистикаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.статистикаToolStripMenuItem.Text = "Статистика";
+            // 
+            // QuestionCountToolStripMenuItem
+            // 
+            this.QuestionCountToolStripMenuItem.Name = "QuestionCountToolStripMenuItem";
+            this.QuestionCountToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.QuestionCountToolStripMenuItem.Text = "Брой въведени  въпроси";
+            this.QuestionCountToolStripMenuItem.Click += new System.EventHandler(this.QuestionCountToolStripMenuItem_Click);
+            // 
+            // ResultToolStripMenuItem
+            // 
+            this.ResultToolStripMenuItem.Name = "ResultToolStripMenuItem";
+            this.ResultToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.ResultToolStripMenuItem.Text = "Резултат";
+            this.ResultToolStripMenuItem.Click += new System.EventHandler(this.ResultToolStripMenuItem_Click);
+            // 
             // ClearAllToolStripMenuItem
             // 
             this.ClearAllToolStripMenuItem.Name = "ClearAllToolStripMenuItem";
@@ -380,6 +410,8 @@ namespace GuessApp
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
             this.HelpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.HelpToolStripMenuItem.Text = "Помощ";
+            this.HelpToolStripMenuItem.Click += new System.EventHandler(this.HelpToolStripMenuItem_Click);
+            
             // 
             // CloseToolStripMenuItem
             // 
@@ -411,36 +443,6 @@ namespace GuessApp
             this.label8.Size = new System.Drawing.Size(322, 16);
             this.label8.TabIndex = 23;
             this.label8.Text = "=============================================";
-            // 
-            // статистикаToolStripMenuItem
-            // 
-            this.статистикаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.QuestionCountToolStripMenuItem,
-            this.ResultToolStripMenuItem});
-            this.статистикаToolStripMenuItem.Name = "статистикаToolStripMenuItem";
-            this.статистикаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.статистикаToolStripMenuItem.Text = "Статистика";
-            // 
-            // QuestionCountToolStripMenuItem
-            // 
-            this.QuestionCountToolStripMenuItem.Name = "QuestionCountToolStripMenuItem";
-            this.QuestionCountToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.QuestionCountToolStripMenuItem.Text = "Брой въведени  въпроси";
-            this.QuestionCountToolStripMenuItem.Click += new System.EventHandler(this.QuestionCountToolStripMenuItem_Click);
-            // 
-            // ResultToolStripMenuItem
-            // 
-            this.ResultToolStripMenuItem.Name = "ResultToolStripMenuItem";
-            this.ResultToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.ResultToolStripMenuItem.Text = "Резултат";
-            this.ResultToolStripMenuItem.Click += new System.EventHandler(this.ResultToolStripMenuItem_Click);
-            // 
-            // покажиВсичкиToolStripMenuItem
-            // 
-            this.покажиВсичкиToolStripMenuItem.Name = "покажиВсичкиToolStripMenuItem";
-            this.покажиВсичкиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.покажиВсичкиToolStripMenuItem.Text = "Покажи всички";
-            this.покажиВсичкиToolStripMenuItem.Click += new System.EventHandler(this.покажиВсичкиToolStripMenuItem_Click);
             // 
             // Form1
             // 
