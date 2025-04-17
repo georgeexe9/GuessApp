@@ -253,13 +253,20 @@ namespace GuessApp
 
         private void ShowHelp()
         {
-            Viewer1.Clear();
-            string file = File.ReadAllText(@"Help.txt", Encoding.GetEncoding("UTF-8"));
-            Viewer1.Text = file;
+            
+
+            try
+            {
+                Viewer1.Clear();
+                string file = File.ReadAllText(@"Help.txt", Encoding.GetEncoding("UTF-8"));
+                Viewer1.Text = file;
+            }
+            catch (FileNotFoundException e)
+            {
+                MessageBox.Show($"Internal error, help file was not found");
+            }
         }
 
-   
-        
         private void DeleteDictionary()
         {
 
@@ -349,6 +356,6 @@ namespace GuessApp
             ShowHelp();
         }
 
-        
+
     }
 }
