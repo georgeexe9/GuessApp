@@ -63,39 +63,14 @@ namespace GuessApp
             string answer3 = AnswBox3.Text;
             string rightAnswer = RightAsw.Text;
 
-            //if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
-            //{
-            //    MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
+            {
+                MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //}
-            if (ques == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи въпрос!");
-            }
-            else if (answer1 == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи първи грешен отговор!");
-            }
-            else if (answer2 == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи втори грешен отговор!");
-            }
-            else if (answer3 == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи трети грешен отговор!");
-            }
-            else if (rightAnswer == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи правилния отговор");
             }
             else
             {
-                
+
                 MakeQuestionsHAH(ques, answer1, answer2, answer3, rightAnswer);
             }
 
@@ -114,6 +89,7 @@ namespace GuessApp
 
                 //задаваме въпросите като ключове в речника, а отговорите стойност в лист
             }
+
             else
             {
                 MessageBox.Show("Този въпрос вече съществува, опитай с друг!","Грешка",MessageBoxButtons.OK, MessageBoxIcon.Error);
