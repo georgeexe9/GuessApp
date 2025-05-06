@@ -14,11 +14,14 @@ namespace GuessApp
     {
         private int counter = 0;
         private int anticounter = 0;
-        Random randomAnswer = new Random();
-        //Речник, който записва въпроси и възможни отговори
-        Dictionary<string, List<string>> QuestionsAnswers = new Dictionary<string, List<string>>();
-        //Речник, който записва въпросите и само правилните отговори към тях.
-        Dictionary<string, string> CurrectAnswers = new Dictionary<string, string>();
+
+
+        //Речник, който записва въпроси и отговори
+        private readonly Dictionary<string, List<string>> QuestionsAnswers = new Dictionary<string, List<string>>();
+        //Речник, който записва въпроси + само верния отговор
+        private readonly Dictionary<string, string> CorrectAnswers = new Dictionary<string, string>();
+
+
         public Form1()
         {
             InitializeComponent();
@@ -60,26 +63,65 @@ namespace GuessApp
             string answer3 = AnswBox3.Text;
             string rightAnswer = RightAsw.Text;
 
-            if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
-            {
-                MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
+            //{
+            //    MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            //}
+            if (ques == "")
+            {
+                Viewer1.Clear();
+                Viewer1.AppendText("Моля въведи въпрос!");
+            }
+            else if (answer1 == "")
+            {
+                Viewer1.Clear();
+                Viewer1.AppendText("Моля въведи първи грешен отговор!");
+            }
+            else if (answer2 == "")
+            {
+                Viewer1.Clear();
+                Viewer1.AppendText("Моля въведи втори грешен отговор!");
+            }
+            else if (answer3 == "")
+            {
+                Viewer1.Clear();
+                Viewer1.AppendText("Моля въведи трети грешен отговор!");
+            }
+            else if (rightAnswer == "")
+            {
+                Viewer1.Clear();
+                Viewer1.AppendText("Моля въведи правилния отговор");
             }
             else
             {
-                //
-                //Въведените въпроси в речника "QuestionsAnswers" са запазени като ключове, а стойностите на всеки ключ са отговори, запазени в лист
-                //questions - key / List<string> - value (съдържа въпроси)
+                
+                MakeQuestionsHAH(ques, answer1, answer2, answer3, rightAnswer);
+            }
+
+
+
+        }
+        private void MakeQuestionsHAH(string ques, string answer1, string answer2, string answer3, string rightAnswer)
+        {
+            if (!QuestionsAnswers.Keys.Contains(ques))
+            {
+                //Запълваме key като ques (въпроси) => value като лист с въпроси
                 QuestionsAnswers[ques] = new List<string>() { answer1, answer2, answer3, rightAnswer };
                 //В "CurrectAnswers въпросите са запазени като ключове, а правилния им отговор като стойност
-                CurrectAnswers[ques] = rightAnswer;
-                MessageBox.Show("Вашия въпрос и отговорите бяха успешно запазени!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CorrectAnswers[ques] = rightAnswer;
+                MessageBox.Show("Вашият въпрос и отговорите бяха успешно запазени!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //задаваме въпросите като ключове в речника, а отговорите стойност в лист
             }
-            //задаваме въпросите като ключове в речника, а отговорите стойност в лист
+            else
+            {
+                MessageBox.Show("Този въпрос вече съществува, опитай с друг!","Грешка",MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             if (QuestionsAnswers.Count == 0)
             {
-                MessageBox.Show("Няма въведени въпроси");
+                MessageBox.Show("Няма въведени въпроси!");
             }
             else
             {
@@ -103,6 +145,10 @@ namespace GuessApp
                 //Визуализиране на правилния отговор под всеки въведен въпрос
 
             }
+        }
+        private void generateRandomPositionForAnswers()
+        {
+
         }
         private void ClearBoxes()
         {
@@ -151,7 +197,10 @@ namespace GuessApp
             //Визуализираме всички отговори на въпросите
             List<string> answers = QuestionsAnswers[question];
             //визуализираме правилния отговор на всеки въпрос
-            string CurrectAnswer = CurrectAnswers[question];
+            string CurrectAnswer = CorrectAnswers[question];
+
+            answers.Add(CurrectAnswer);
+            RandomAnswers(answers);
 
             //пълним viewer1 със съдържанието от речниците 
             Viewer1.Clear();
@@ -164,12 +213,24 @@ namespace GuessApp
 
 
         }
+        private void RandomAnswers(List<string> answers)
+        {
+            Random r1 = new Random();
+            for (int i = answers.Count - 1; i > 0; i--)
+            {
+                int j = r1.Next(i + 1);
+                string temp = answers[j];
+                answers[i] = answers[j];
+                answers[j] = temp;
+
+            }
+        }
 
         private void Submit_Click(object sender, EventArgs e)
         {
 
             string SelectedAnswer = AnswerBox.Text;
-            if (QuestionsAnswers.Count == 0 || CurrectAnswers.Count == 0)
+            if (QuestionsAnswers.Count == 0 || CorrectAnswers.Count == 0)
             {
                 MessageBox.Show("Няма как да отговориш на въпрос без да знаеш отговора! Създай въпрос, кликни върху - Стартирай игра и отговори!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
@@ -183,7 +244,7 @@ namespace GuessApp
         {
 
             string question = questionKeys[currentQuestionIndex];
-            string correctAnswer = CurrectAnswers[question];
+            string correctAnswer = CorrectAnswers[question];
             //Сравняваме въведения отговор на потребитела с този въведен в речниците - като игнорираме как се въвежда стрига
             if (SelectedAnswer.Equals(correctAnswer, StringComparison.OrdinalIgnoreCase))
             {
@@ -253,7 +314,7 @@ namespace GuessApp
 
         private void ShowHelp()
         {
-            
+
 
             try
             {
@@ -261,9 +322,9 @@ namespace GuessApp
                 string file = File.ReadAllText(@"Help.txt", Encoding.GetEncoding("UTF-8"));
                 Viewer1.Text = file;
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
-                MessageBox.Show($"Internal error, help file was not found");
+                MessageBox.Show($"Файлът не може да бъде намерен!");
             }
         }
 
@@ -271,13 +332,13 @@ namespace GuessApp
         {
 
 
-            if (QuestionsAnswers.Count != 0 || CurrectAnswers.Count != 0)
+            if (QuestionsAnswers.Count != 0 || CorrectAnswers.Count != 0)
             {
                 DialogResult decision = MessageBox.Show("Наистина ли искате да изтриете всички въведени въпроси", "Изтриване на въпроси", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (decision == DialogResult.Yes)
                 {
                     QuestionsAnswers.Clear();
-                    CurrectAnswers.Clear();
+                    CorrectAnswers.Clear();
                     Viewer1.Text = "";
                     MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -301,7 +362,7 @@ namespace GuessApp
             }
             else
             {
-                MessageBox.Show("Хахаха ще играеш още!", "HAHAHA");
+                MessageBox.Show("Хахаха ще играеш още!", "няяя се измъкнеш");
             }
         }
 
