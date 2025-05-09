@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -54,6 +52,20 @@ namespace GuessApp
         {
             ClearBoxes();
         }
+        //Валидация на textboxes
+        private bool ValidateAllTextBoxes(string ques, string answer1, string answer2, string answer3, string rightAnswer)
+        {
+            if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
+            {
+                return false;
+            }
+
+            else
+            {
+                return true;
+            }
+        }
+
         private void SaveData()
         {
             //Чисти Viewer1, за да не дубликира въпросите след всеки нововъведен въпрос
@@ -64,18 +76,21 @@ namespace GuessApp
             string answer3 = AnswBox3.Text;
             string rightAnswer = RightAsw.Text;
 
-            if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
+            if (!ValidateAllTextBoxes(ques, answer1, answer2, answer3, rightAnswer))
             {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведете всички празни полета!");
-
+                MessageBox.Show("Моля, попълнете всички полета!", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             else
             {
-                Viewer1.Clear();
+                
                 MakeQuestionsHAH(ques, answer1, answer2, answer3, rightAnswer);
+                return;
             }
+
+
         }
+
         //не иска параметър за речник, използва глобалния речник
         private void ShowQuestionsHah()
         {
@@ -124,11 +139,11 @@ namespace GuessApp
                 MessageBox.Show("Този въпрос вече съществува, опитай с друг!", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             //показва въпросите
-           ShowQuestionsHah();
+            ShowQuestionsHah();
 
-           
+
         }
-        
+
         private void ClearBoxes()
         {
             QuestionBox.Clear();
@@ -178,8 +193,8 @@ namespace GuessApp
             //визуализираме правилния отговор на всеки въпрос
             string CurrectAnswer = CorrectAnswers[question];
 
-           
-            
+
+
 
             //пълним viewer1 със съдържанието от речниците 
             Viewer1.Clear();
@@ -192,7 +207,7 @@ namespace GuessApp
 
 
         }
-       
+
         private void Submit_Click(object sender, EventArgs e)
         {
 
@@ -325,7 +340,7 @@ namespace GuessApp
             else
             {
                 MessageBox.Show("Хахаха ще играеш още!", "няяя се измъкнеш");
-               
+
             }
         }
 
@@ -346,14 +361,14 @@ namespace GuessApp
             MessageBox.Show($"Общо въведени въпроси: {countQuestions}");
         }
 
-        
+
 
         private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowHelp();
         }
 
-       
+
 
         private void ShowQuestionsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
