@@ -117,6 +117,7 @@ namespace GuessApp
 
                 //задаваме въпросите като ключове в речника, а отговорите стойност в лист
             }
+
             else
             {
                 MessageBox.Show("Този въпрос вече съществува, опитай с друг!", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
