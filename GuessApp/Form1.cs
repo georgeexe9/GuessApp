@@ -178,8 +178,8 @@ namespace GuessApp
             //визуализираме правилния отговор на всеки въпрос
             string CurrectAnswer = CorrectAnswers[question];
 
-            answers.Add(CurrectAnswer);
-            RandomAnswers(answers);
+           
+            
 
             //пълним viewer1 със съдържанието от речниците 
             Viewer1.Clear();
