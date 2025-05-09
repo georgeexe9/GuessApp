@@ -5,6 +5,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -122,14 +123,12 @@ namespace GuessApp
             {
                 MessageBox.Show("Този въпрос вече съществува, опитай с друг!", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            //показва въпросите
            ShowQuestionsHah();
 
            
         }
-        private void generateRandomPositionForAnswers()
-        {
-
-        }
+        
         private void ClearBoxes()
         {
             QuestionBox.Clear();
@@ -193,19 +192,7 @@ namespace GuessApp
 
 
         }
-        private void RandomAnswers(List<string> answers)
-        {
-            Random r1 = new Random();
-            for (int i = answers.Count - 1; i > 0; i--)
-            {
-                int j = r1.Next(i + 1);
-                string temp = answers[j];
-                answers[i] = answers[j];
-                answers[j] = temp;
-
-            }
-        }
-
+       
         private void Submit_Click(object sender, EventArgs e)
         {
 
@@ -338,6 +325,7 @@ namespace GuessApp
             else
             {
                 MessageBox.Show("Хахаха ще играеш още!", "няяя се измъкнеш");
+               
             }
         }
 
@@ -358,39 +346,27 @@ namespace GuessApp
             MessageBox.Show($"Общо въведени въпроси: {countQuestions}");
         }
 
-        private void покажиВсичкиToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Viewer1.Clear();
-            if (QuestionsAnswers.Count == 0)
-            {
-                MessageBox.Show("Няма въведени въпроси");
-            }
-            else
-            {
-                foreach (var s in QuestionsAnswers)
-                {
-                    // Показваме кючовете като въпроси в Richtextbox
-
-                    string savedAnswers = $"Вашия въпрос е: {s.Key}";
-                    Viewer1.AppendText(savedAnswers + Environment.NewLine);
-
-
-                    // Визуализираме отговорите от листа(който се явява като стойност в речника)
-                    for (int i = 0; i < s.Value.Count; i++)
-                    {
-                        Viewer1.AppendText($"{i + 1} {s.Value[i]}\n");
-                    }
-                    Viewer1.AppendText(Environment.NewLine);
-
-
-                }
-            }
-        }
+        
 
         private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowHelp();
         }
+
+       
+
+        private void ShowQuestionsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ShowQuestionsHah();
+        }
+
+        private void DeleteQuestionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteDictionary();
+        }
+
+
+
         //private void LoadImage()
         //{
 
