@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,6 @@ namespace GuessApp
     {
         private int counter = 0;
         private int anticounter = 0;
-
-
         //Речник, който записва въпроси и отговори
         private readonly Dictionary<string, List<string>> QuestionsAnswers = new Dictionary<string, List<string>>();
         //Речник, който записва въпроси + само верния отговор
@@ -30,6 +29,7 @@ namespace GuessApp
         private void Form1_Load(object sender, EventArgs e)
         {
             TextStyle();
+            //LoadImage();
         }
 
 
@@ -63,62 +63,21 @@ namespace GuessApp
             string answer3 = AnswBox3.Text;
             string rightAnswer = RightAsw.Text;
 
-            //if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
-            //{
-            //    MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
+            {
+                Viewer1.Clear();
+                Viewer1.AppendText("Моля въведете всички празни полета!");
 
-            //}
-            if (ques == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи въпрос!");
-            }
-            else if (answer1 == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи първи грешен отговор!");
-            }
-            else if (answer2 == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи втори грешен отговор!");
-            }
-            else if (answer3 == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи трети грешен отговор!");
-            }
-            else if (rightAnswer == "")
-            {
-                Viewer1.Clear();
-                Viewer1.AppendText("Моля въведи правилния отговор");
             }
             else
             {
-                
+                Viewer1.Clear();
                 MakeQuestionsHAH(ques, answer1, answer2, answer3, rightAnswer);
             }
-
-
-
         }
-        private void MakeQuestionsHAH(string ques, string answer1, string answer2, string answer3, string rightAnswer)
+        //не иска параметър за речник, използва глобалния речник
+        private void ShowQuestionsHah()
         {
-            if (!QuestionsAnswers.Keys.Contains(ques))
-            {
-                //Запълваме key като ques (въпроси) => value като лист с въпроси
-                QuestionsAnswers[ques] = new List<string>() { answer1, answer2, answer3, rightAnswer };
-                //В "CurrectAnswers въпросите са запазени като ключове, а правилния им отговор като стойност
-                CorrectAnswers[ques] = rightAnswer;
-                MessageBox.Show("Вашият въпрос и отговорите бяха успешно запазени!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                //задаваме въпросите като ключове в речника, а отговорите стойност в лист
-            }
-            else
-            {
-                MessageBox.Show("Този въпрос вече съществува, опитай с друг!","Грешка",MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
             if (QuestionsAnswers.Count == 0)
             {
                 MessageBox.Show("Няма въведени въпроси!");
@@ -145,6 +104,26 @@ namespace GuessApp
                 //Визуализиране на правилния отговор под всеки въведен въпрос
 
             }
+        }
+        private void MakeQuestionsHAH(string ques, string answer1, string answer2, string answer3, string rightAnswer)
+        {
+            if (!QuestionsAnswers.Keys.Contains(ques))
+            {
+                //Запълваме key като ques (въпроси) => value като лист с въпроси
+                QuestionsAnswers[ques] = new List<string>() { answer1, answer2, answer3, rightAnswer };
+                //В "CurrectAnswers въпросите са запазени като ключове, а правилния им отговор като стойност
+                CorrectAnswers[ques] = rightAnswer;
+                MessageBox.Show("Вашият въпрос и отговорите бяха успешно запазени!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //задаваме въпросите като ключове в речника, а отговорите стойност в лист
+            }
+            else
+            {
+                MessageBox.Show("Този въпрос вече съществува, опитай с друг!", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           ShowQuestionsHah();
+
+           
         }
         private void generateRandomPositionForAnswers()
         {
@@ -314,8 +293,6 @@ namespace GuessApp
 
         private void ShowHelp()
         {
-
-
             try
             {
                 Viewer1.Clear();
@@ -343,9 +320,6 @@ namespace GuessApp
                     MessageBox.Show("Въпросите бяха изтрити", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
-
-
-
             }
             else
             {
@@ -416,7 +390,19 @@ namespace GuessApp
         {
             ShowHelp();
         }
+        //private void LoadImage()
+        //{
 
+        //    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+        //    {
+        //        openFileDialog.Filter = "Image|*.png;*.jpg;*.bmp;*.gif";
+        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        //        {
+        //            pictureBox2.Image = Image.FromFile(@openFileDialog.FileName);
+        //        }
+        //    }
 
+        //}
     }
+
 }
