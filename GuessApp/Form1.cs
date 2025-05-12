@@ -17,8 +17,11 @@ namespace GuessApp
 
 
         //Речник, който записва въпроси и отговори
+
         private readonly Dictionary<string, List<string>> QuestionsAnswers = new Dictionary<string, List<string>>();
+
         //Речник, който записва въпроси + само верния отговор
+
         private readonly Dictionary<string, string> CorrectAnswers = new Dictionary<string, string>();
 
 
@@ -66,17 +69,18 @@ namespace GuessApp
             if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
             {
                 MessageBox.Show("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Viewer1.AppendText("Моля, въведи всички полета! Трябва да са въведени точни 3 грешни и 1 верен отговор!");
 
             }
             else
             {
-
                 MakeQuestionsHAH(ques, answer1, answer2, answer3, rightAnswer);
             }
 
 
 
         }
+     
         private void MakeQuestionsHAH(string ques, string answer1, string answer2, string answer3, string rightAnswer)
         {
             if (!QuestionsAnswers.Keys.Contains(ques))
@@ -122,10 +126,7 @@ namespace GuessApp
 
             }
         }
-        private void generateRandomPositionForAnswers()
-        {
-
-        }
+        
         private void ClearBoxes()
         {
             QuestionBox.Clear();
@@ -393,6 +394,10 @@ namespace GuessApp
             ShowHelp();
         }
 
+        private void ImageLoad()
+        {
 
+        }
     }
+    
 }
