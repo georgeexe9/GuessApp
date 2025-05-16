@@ -9,11 +9,24 @@ using System.Xml.Linq;
 
 namespace GuessApp
 {
+    /// <summary>
+    /// ================================== GUESS APP ==================================
+    /// ==== Notes ===
+    /// 
+    /// 
+    /// </summary>
 
     public partial class Form1 : Form
     {
+        //частни полета
+        private string ques;
+        private string answer1;
+        private string answer2;
+        private string answer3;
+        private string rightAnswer;
         private int counter = 0;
         private int anticounter = 0;
+        //структурите от данни
         //Речник, който записва въпроси и отговори
         private readonly Dictionary<string, List<string>> QuestionsAnswers = new Dictionary<string, List<string>>();
         //Речник, който записва въпроси + само верния отговор
@@ -53,6 +66,7 @@ namespace GuessApp
             ClearBoxes();
         }
         //Валидация на textboxes
+        
         private bool ValidateAllTextBoxes(string ques, string answer1, string answer2, string answer3, string rightAnswer)
         {
             if (ques == "" || answer1 == "" || answer2 == "" || answer3 == "" || rightAnswer == "")
@@ -70,20 +84,21 @@ namespace GuessApp
         {
             //Чисти Viewer1, за да не дубликира въпросите след всеки нововъведен въпрос
             Viewer1.Clear();
-            string ques = QuestionBox.Text;
-            string answer1 = AnswBox1.Text;
-            string answer2 = AnswBox2.Text;
-            string answer3 = AnswBox3.Text;
-            string rightAnswer = RightAsw.Text;
+            ques = QuestionBox.Text;
+            answer1 = AnswBox1.Text;
+            answer2 = AnswBox2.Text;
+            answer3 = AnswBox3.Text;
+            rightAnswer = RightAsw.Text;
 
             if (!ValidateAllTextBoxes(ques, answer1, answer2, answer3, rightAnswer))
             {
                 MessageBox.Show("Моля, попълнете всички полета!", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Viewer1.AppendText("Моля, попълнете всички полета!");
                 return;
             }
             else
             {
-                
+
                 MakeQuestionsHAH(ques, answer1, answer2, answer3, rightAnswer);
                 return;
             }
