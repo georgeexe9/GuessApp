@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Windows.Controls;
@@ -7,28 +8,34 @@ namespace GuessApp
 {
     public class Questions
     {
-        public string Question { get; set; }
-        public List<string> Answers { get; set; } = new List<string>();
+        public string  Question { get; set; }
         public string CorrectAnswer { get; set; }
+        public List<string> Answers { get; set; } = new List<string>();
+       
 
-        public Questions()
+        //constructor
+        public Questions(string question, List<string> answers, string correctAnswer)
         {
-            
+            Question = question;
+            Answers = answers;
+            CorrectAnswer = correctAnswer;
+      
         }
+        //save question
         public void SetQuestion(string question, List<string> answers, string correctAnswer)
         {
             Question = question;
             Answers = answers;
             CorrectAnswer = correctAnswer;
         }
-        
-        public void RemoveQuestions(string question, List<string> answers, string correctAnswer)
+        //remove already added question
+        public void RemoveQuestions()
         {
-            question = "";          
-            answers.Clear();
-            correctAnswer = "";
+            Question = "";          
+            Answers.Clear();
+            CorrectAnswer = "";
         }
-        
+        //displaying all answers
         public string DisplayAnswers()
         {
             StringBuilder sb = new StringBuilder();
@@ -38,15 +45,10 @@ namespace GuessApp
             }
             return sb.ToString();
         }
+        
        
-        public void CompareAnswers()
-        {
-
-        }
-        public void ExportQuestions()
-        {
-
-        }
+       
+       
 
        
 

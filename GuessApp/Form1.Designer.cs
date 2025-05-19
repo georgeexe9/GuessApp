@@ -52,6 +52,7 @@ namespace GuessApp
             this.QuestionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowQuestionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteQuestionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.изчистиСписъкToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.статистикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.QuestionCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +63,8 @@ namespace GuessApp
             this.QuestionHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AnswersHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CorrectAnswer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label7 = new System.Windows.Forms.Label();
+            this.LabelQuestionInfo = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -72,7 +75,7 @@ namespace GuessApp
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe Print", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(105, 24);
+            this.label1.Location = new System.Drawing.Point(153, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(237, 51);
             this.label1.TabIndex = 0;
@@ -90,18 +93,20 @@ namespace GuessApp
             this.ClearButton.TabIndex = 15;
             this.ClearButton.Text = "Изчисти";
             this.ClearButton.UseVisualStyleBackColor = false;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // StartGameButton
             // 
             this.StartGameButton.BackColor = System.Drawing.Color.White;
             this.StartGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.StartGameButton.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartGameButton.Location = new System.Drawing.Point(144, 600);
+            this.StartGameButton.Location = new System.Drawing.Point(144, 641);
             this.StartGameButton.Name = "StartGameButton";
             this.StartGameButton.Size = new System.Drawing.Size(246, 29);
             this.StartGameButton.TabIndex = 13;
             this.StartGameButton.Text = "Стартирай игра";
             this.StartGameButton.UseVisualStyleBackColor = false;
+            this.StartGameButton.Click += new System.EventHandler(this.StartGameButton_Click);
             // 
             // SaveButton
             // 
@@ -239,9 +244,9 @@ namespace GuessApp
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(23, 117);
+            this.groupBox1.Location = new System.Drawing.Point(89, 116);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(490, 295);
+            this.groupBox1.Size = new System.Drawing.Size(355, 295);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Създай въпрос";
@@ -252,7 +257,7 @@ namespace GuessApp
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(110, 75);
+            this.label2.Location = new System.Drawing.Point(159, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(232, 16);
             this.label2.TabIndex = 19;
@@ -271,6 +276,7 @@ namespace GuessApp
             // 
             // настройкиToolStripMenuItem
             // 
+            this.настройкиToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.QuestionsToolStripMenuItem,
             this.статистикаToolStripMenuItem,
@@ -286,7 +292,9 @@ namespace GuessApp
             // 
             this.QuestionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ShowQuestionsToolStripMenuItem,
-            this.DeleteQuestionsToolStripMenuItem});
+            this.DeleteQuestionsToolStripMenuItem,
+            this.изчистиСписъкToolStripMenuItem});
+            this.QuestionsToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.QuestionsToolStripMenuItem.Name = "QuestionsToolStripMenuItem";
             this.QuestionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.QuestionsToolStripMenuItem.Text = "Въпроси опции";
@@ -296,6 +304,7 @@ namespace GuessApp
             this.ShowQuestionsToolStripMenuItem.Name = "ShowQuestionsToolStripMenuItem";
             this.ShowQuestionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ShowQuestionsToolStripMenuItem.Text = "Покажи въпроси";
+            this.ShowQuestionsToolStripMenuItem.Click += new System.EventHandler(this.ShowQuestionsToolStripMenuItem_Click);
             // 
             // DeleteQuestionsToolStripMenuItem
             // 
@@ -304,11 +313,19 @@ namespace GuessApp
             this.DeleteQuestionsToolStripMenuItem.Text = "Изтрий въпроси";
             this.DeleteQuestionsToolStripMenuItem.Click += new System.EventHandler(this.DeleteQuestionsToolStripMenuItem_Click);
             // 
+            // изчистиСписъкToolStripMenuItem
+            // 
+            this.изчистиСписъкToolStripMenuItem.Name = "изчистиСписъкToolStripMenuItem";
+            this.изчистиСписъкToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.изчистиСписъкToolStripMenuItem.Text = "Изчисти списък";
+            this.изчистиСписъкToolStripMenuItem.Click += new System.EventHandler(this.изчистиСписъкToolStripMenuItem_Click);
+            // 
             // статистикаToolStripMenuItem
             // 
             this.статистикаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.QuestionCountToolStripMenuItem,
             this.ResultToolStripMenuItem});
+            this.статистикаToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.статистикаToolStripMenuItem.Name = "статистикаToolStripMenuItem";
             this.статистикаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.статистикаToolStripMenuItem.Text = "Статистика";
@@ -327,18 +344,21 @@ namespace GuessApp
             // 
             // SaveButtonQuestions
             // 
+            this.SaveButtonQuestions.ForeColor = System.Drawing.Color.Black;
             this.SaveButtonQuestions.Name = "SaveButtonQuestions";
             this.SaveButtonQuestions.Size = new System.Drawing.Size(180, 22);
             this.SaveButtonQuestions.Text = "Запиши въпроси";
             // 
             // HelpToolStripMenuItem
             // 
+            this.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
             this.HelpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.HelpToolStripMenuItem.Text = "Помощ";
             // 
             // CloseToolStripMenuItem
             // 
+            this.CloseToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
             this.CloseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CloseToolStripMenuItem.Text = "Затвори";
@@ -346,14 +366,19 @@ namespace GuessApp
             // listView1
             // 
             this.listView1.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listView1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.listView1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("listView1.BackgroundImage")));
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.QuestionHeader,
             this.AnswersHeader,
             this.CorrectAnswer});
+            this.listView1.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(23, 418);
+            this.listView1.Location = new System.Drawing.Point(23, 448);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(490, 171);
+            this.listView1.Size = new System.Drawing.Size(490, 187);
             this.listView1.TabIndex = 22;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -373,6 +398,30 @@ namespace GuessApp
             this.CorrectAnswer.Text = "Правилен отговор";
             this.CorrectAnswer.Width = 123;
             // 
+            // label7
+            // 
+            this.label7.AllowDrop = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(20, 424);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(169, 21);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Вече въведени въпроси:";
+            // 
+            // LabelQuestionInfo
+            // 
+            this.LabelQuestionInfo.AllowDrop = true;
+            this.LabelQuestionInfo.BackColor = System.Drawing.Color.Transparent;
+            this.LabelQuestionInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelQuestionInfo.ForeColor = System.Drawing.Color.White;
+            this.LabelQuestionInfo.Location = new System.Drawing.Point(194, 424);
+            this.LabelQuestionInfo.Name = "LabelQuestionInfo";
+            this.LabelQuestionInfo.Size = new System.Drawing.Size(19, 21);
+            this.LabelQuestionInfo.TabIndex = 23;
+            this.LabelQuestionInfo.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -380,7 +429,9 @@ namespace GuessApp
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(525, 641);
+            this.ClientSize = new System.Drawing.Size(525, 682);
+            this.Controls.Add(this.LabelQuestionInfo);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.StartGameButton);
             this.Controls.Add(this.menuStrip1);
@@ -436,6 +487,9 @@ namespace GuessApp
         private System.Windows.Forms.ColumnHeader QuestionHeader;
         private System.Windows.Forms.ColumnHeader AnswersHeader;
         private System.Windows.Forms.ColumnHeader CorrectAnswer;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label LabelQuestionInfo;
+        private System.Windows.Forms.ToolStripMenuItem изчистиСписъкToolStripMenuItem;
     }
 }
 
